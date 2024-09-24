@@ -31,3 +31,17 @@ EVENT REGISTRATION !!
     Content:
              Lists events with details: total tickets, sold tickets, and available tickets in a neat format.
              Allows organisers to see how many tickets are still available.
+
+6. Contact Us Page (contact.html)
+     Purpose: Provides a way for users to reach out to the event platform for inquiries or support.
+     Content:
+          A form that typically includes fields for the user's name, email address, message, and phone number.
+          A submit button that allows users to send their inquiries.
+          A confirmation message upon submission, thanking them for their response and indicating that the team will reach out soon.
+
+7. About Page (about.html)
+      Purpose: Offers information about the event platform and its mission.
+      Content:
+            Describes the platform’s purpose, emphasizing its role in connecting organizations and helping them manage events effectively.
+            Highlights features such as user dashboards for attendees and organizers.
+            May include information about the team, vision, and values of the platform.
