@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Sales Overview</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #333;">
+        <a class="navbar-brand" href="home.html">Event Platform</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
+        <h1 class="text-center">Available Tickets</h1>
+        <div class="card text-center mb-4" style="background: rgba(255, 255, 255, 0.9);">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Total Tickets</th>
+                            <th>Sold Tickets</th>
+                            <th>Available Tickets</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticket-list">
+                        <!-- Available tickets will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a href="home.html" class="button back-button btn btn-secondary">Back to Home</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const events = [
+            { name: 'Annual Conference 2024', totalTickets: 250 },
+            { name: 'Web Development Workshop', totalTickets: 300 },
+            { name: 'Networking Meetup for Professionals', totalTickets: 200 },
+            { name: 'Marketing Strategies Seminar', totalTickets: 275 },
+            { name: 'Annual Charity Gala', totalTickets: 230 },
+            { name: 'Project Management Conference', totalTickets: 280 },
+            { name: 'AI Innovations Summit', totalTickets: 290 },
+            { name: 'Startup Pitch Competition', totalTickets: 250 },
+            { name: 'Health and Wellness Fair', totalTickets: 260 }
+        ];
+
+        const registeredEvents = JSON.parse(sessionStorage.getItem('registeredEvents')) || [];
+
+        const ticketList = document.getElementById('ticket-list');
+        events.forEach(event => {
+            const registeredCount = registeredEvents.filter(e => e === event.name).length;
+            const availableTickets = event.totalTickets - registeredCount;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${event.name}</td>
+                <td>${event.totalTickets}</td>
+                <td>${registeredCount}</td>
+                <td>${availableTickets}</td>
+            `;
+            ticketList.appendChild(row);
+        });
+    </script>
+</body>
+</html>
