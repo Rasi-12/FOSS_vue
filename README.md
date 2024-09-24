@@ -1,3 +1,5 @@
+EVENT REGISTRATION !!
+
 1. Home Page (home.html)
       Purpose: Serves as the main entry point for the Event Platform.
       Content: Contains navigation links to other pages like About, Contact, and the Attendee and Organiser dashboards.
