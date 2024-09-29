@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #333;">
@@ -29,45 +30,16 @@
         </div>
     </nav>
 
-    <div class="container mt-5 pt-5">
+    <div id="app" class="container mt-5 pt-5">
         <h1 class="text-center">Organiser Dashboard</h1>
         <p class="text-center">Here you can manage your events.</p>
 
-        <div class="card text-center mb-4" style="background: rgba(255, 255, 255, 0.9);">
-            <div class="card-body">
-                <h5 class="card-title">Welcome to the Organiser Dashboard!</h5>
-                <p class="card-text">Manage your events effectively and connect with attendees.</p>
-                <a href="ticorg.html" class="btn btn-primary">Manage Events</a> <!-- Updated link -->
-            </div>
-        </div>
-
         <h2 class="text-center">Current Events</h2>
         <ul class="list-group mb-4">
-            <li class="list-group-item">Annual Conference 2024
-                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
-            </li>
-            <li class="list-group-item">Web Development Workshop
-                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
-            </li>
-            <li class="list-group-item">Networking Meetup for Professionals
-                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
-            </li>
-            <li class="list-group-item">Marketing Strategies Seminar
-                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
-            </li>
-            <li class="list-group-item">Annual Charity Gala
-                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
-            </li>
-            <li class="list-group-item">Project Management Conference
-                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
-            </li>
-            <li class="list-group-item">AI Innovations Summit
-                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
-            </li>
-            <li class="list-group-item">Startup Pitch Competition
-                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
-            </li>
-            <li class="list-group-item">Health and Wellness Fair
+            <li class="list-group-item" v-for="event in events" :key="event.title">
+                <strong>{{ event.title }}</strong><br>
+                <small>Date: {{ event.date }} | Location: {{ event.location }}</small><br>
+                <small>{{ event.extra }}</small>
                 <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
             </li>
         </ul>
@@ -79,5 +51,22 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                events: [
+                    { title: 'Techspo', date: 'Wed, Nov 29, 9:00 AM', location: 'The Westin Gurgaon New Delhi', extra: 'Starts at Rs 1187', image: 'techspo.png' },
+                    { title: 'India Tech Summit', date: 'Wed, Dec 18, 10:00 AM', location: 'New Delhi, New Delhi, DL', extra: 'Global Startup Ecosystem', image: 'techsummit.png' },
+                    { title: 'International Real Estate Expo 2024', date: 'Fri, Oct 18, 11:00 AM', location: 'Le Meridien New Delhi', extra: 'GMN Road Shows & Events', image: 'mumexp.png' },
+                    { title: 'Mumbai International Finance Expo', date: 'Fri, Oct 25, 8:30 AM', location: 'Jio World Convention Centre, Mumbai', extra: 'Free | FIFin', image: 'mumexp.png' },
+                    { title: 'Philips Jumpstarter', date: 'Mon, Nov 7, 10:00 AM', location: 'Taj Lands End, Mumbai', extra: '', image: 'philips.png' },
+                    { title: 'Upcoming Dubai Event', date: 'Sat, Oct 26, 10:00 AM', location: 'Le Royal Meridien Chennai', extra: 'Free | Jassbier Sachdev', image: 'dubai.png' },
+                    { title: '1st Intl Workshop on RAI for Healthcare and Net Zero', date: 'Wed, Oct 16, 9:00 AM', location: 'IIT Madras Campus', extra: 'Free', image: 'worksp.png' }
+                ]
+            }
+        });
+    </script>
 </body>
 </html>
