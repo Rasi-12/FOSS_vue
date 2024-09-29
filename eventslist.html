@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Best Events in India</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9f5eb; /* Updated background color */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin-top: 20px;
+    }
+    h1 {
+      font-size: 40px; /* Increased font size */
+      font-weight: bold; /* Made it bolder */
+      color: #1e90ff; /* Changed title color */
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .event-card {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+    .event-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .event-details {
+      margin-top: 10px;
+    }
+    .event-details h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .event-details .event-date {
+      color: red;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .event-details .event-location {
+      color: #555;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .event-details .event-extra {
+      font-size: 13px;
+      color: #777;
+      margin-top: 2px;
+    }
+    .view-more-btn {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .view-more-btn button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .book-event-btn {
+      padding: 8px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .book-event-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <!-- Title of the page -->
+    <h1>Best Events in India</h1>
+
+    <!-- Subtitle description -->
+    <p>Check out the latest events in town. Explore by location, trending searches, top organizers, and more.</p>
+    
+    <!-- Event cards -->
+    <div class="events-grid">
+      <div v-for="(event, index) in visibleEvents" :key="index" class="event-card">
+        <img :src="event.image" :alt="event.title" />
+        <div class="event-details">
+          <h3>{{ event.title }}</h3>
+          <p class="event-date">{{ event.date }}</p>
+          <p class="event-location">{{ event.location }}</p>
+          <p class="event-extra">{{ event.extra }}</p>
+          <!-- Book an Event Button -->
+          <button class="book-event-btn" @click="bookEvent">Book an Event</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- View more button -->
+    <div class="view-more-btn" v-if="!showAll">
+      <button @click="viewMore">View More</button>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        events: [
+          { title: 'Techspo', date: 'Wed, Nov 29, 9:00 AM', location: 'The Westin Gurgaon New Delhi', extra: 'Starts at Rs 1187', image: 'techspo.png' },
+          { title: 'India Tech Summit', date: 'Wed, Dec 18, 10:00 AM', location: 'New Delhi, New Delhi, DL', extra: 'Global Startup Ecosystem', image: 'techsummit.png' },
+          { title: 'International Real Estate Expo 2024', date: 'Fri, Oct 18, 11:00 AM', location: 'Le Meridien New Delhi', extra: 'GMN Road Shows & Events', image: 'mumexp.png' },
+          { title: 'Mumbai International Finance Expo', date: 'Fri, Oct 25, 8:30 AM', location: 'Jio World Convention Centre, Mumbai', extra: 'Free | FIFin', image: 'mumexp.png' },
+          { title: 'Philips Jumpstarter', date: 'Mon, Nov 7, 10:00 AM', location: 'Taj Lands End, Mumbai', extra: '', image: 'philips.png' },
+          { title: 'Upcoming Dubai Event', date: 'Sat, Oct 26, 10:00 AM', location: 'Le Royal Meridien Chennai', extra: 'Free | Jassbier Sachdev', image: 'dubai.png' },
+          { title: '1st Intl Workshop on RAI for Healthcare and Net Zero', date: 'Wed, Oct 16, 9:00 AM', location: 'IIT Madras Campus', extra: 'Free', image: 'worksp.png' }
+        ],
+        showAll: false
+      },
+      computed: {
+        visibleEvents() {
+          return this.showAll ? this.events : this.events.slice(0, 3);
+        }
+      },
+      methods: {
+        viewMore() {
+          this.showAll = true;
+        },
+        bookEvent() {
+          window.location.href = 'eventdet.html'; // Redirect to event details page
+        }
+      }
+    });
+  </script>
+</body>
+</html>

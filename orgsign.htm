@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup Form</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0c1a4b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .signup-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-group label {
+      font-size: 14px;
+    }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:disabled {
+      background-color: #ccc;
+    }
+    .terms {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+    }
+    .terms input {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="signup-container">
+    <h2>Signup</h2>
+    <form @submit.prevent="submitForm">
+      <div class="form-group">
+        <label for="orgName">Organization Name</label>
+        <input type="text" id="orgName" v-model="form.orgName" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" v-model="form.email" required />
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone No</label>
+        <input type="text" id="phone" v-model="form.phone" required />
+      </div>
+      <div class="form-group">
+        <label for="industry">Industry</label>
+        <select id="industry" v-model="form.industry" required>
+          <option disabled value="">Select Industry</option>
+          <option value="Tech">Tech</option>
+          <option value="Finance">Finance</option>
+          <option value="Healthcare">Healthcare</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" v-model="form.password" required />
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" v-model="form.confirmPassword" required />
+      </div>
+      <div class="terms">
+        <input type="checkbox" v-model="form.agree" id="agree" />
+        <label for="agree">I agree to the <a href="#">terms and conditions</a></label>
+      </div>
+      <button type="submit" class="btn" :disabled="!form.agree || !isPasswordMatch">
+        Signup
+      </button>
+    </form>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          form: {
+            orgName: '',
+            email: '',
+            phone: '',
+            industry: '',
+            password: '',
+            confirmPassword: '',
+            agree: false,
+          },
+        };
+      },
+      computed: {
+        isPasswordMatch() {
+          return this.form.password === this.form.confirmPassword;
+        },
+      },
+      methods: {
+        submitForm() {
+          if (this.isPasswordMatch) {
+            alert('Form submitted successfully!');
+            window.location.href = 'login.html'; // Redirect to the login page
+          } else {
+            alert('Passwords do not match.');
+          }
+        },
+      },
+    });
+  </script>
+</body>
+</html>

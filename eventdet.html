@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .background {
+            background-image: url('event_det.png'); /* Ensure the image is in the same directory */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh; /* Full screen height */
+            width: 100vw; /* Full screen width */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.7); /* Slightly more transparent */
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            width: 100%;
+            max-width: 450px; /* Adjust width for larger screens */
+            box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5); /* Added shadow for better visibility */
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .form-container select, .form-container button {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        .form-container select {
+            background-color: #fff;
+            color: #000;
+        }
+        .form-container button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="background">
+        <div class="form-container">
+            <h2>Tell Us About Your Events</h2>
+            <select v-model="eventType">
+                <option disabled value="">What type of events do you plan to organize?</option>
+                <option>Conference</option>
+                <option>Workshop</option>
+                <option>Seminars</option>
+                <option>Webinars</option>
+                <option>Exhibition</option>
+            </select>
+
+            <select v-model="eventSize">
+                <option disabled value="">What is the expected size of your events?</option>
+                <option>Small (1-50)</option>
+                <option>Medium (51-200)</option>
+                <option>Large (200+)</option>
+            </select>
+
+            <select v-model="frequency">
+                <option disabled value="">How frequently do you organize events?</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
+                <option>Quarterly</option>
+                <option>Annually</option>
+                <option>Occasionally</option>
+            </select>
+
+            <select v-model="hostingType">
+                <option disabled value="">Do you plan to host in-person or virtual events?</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Both</option>
+            </select>
+
+            <button @click="submitForm">Continue</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            eventType: '',
+            eventSize: '',
+            frequency: '',
+            hostingType: ''
+        },
+        methods: {
+            submitForm() {
+                if (this.eventType && this.eventSize && this.frequency && this.hostingType) {
+                    alert(`Submitted:
+                    Event Type: ${this.eventType},
+                    Event Size: ${this.eventSize},
+                    Frequency: ${this.frequency},
+                    Hosting Type: ${this.hostingType}`);
+                } else {
+                    alert("Please fill out all fields");
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

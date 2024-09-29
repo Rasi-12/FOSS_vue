@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #1c2a48;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .login-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+        .login-container a {
+            text-decoration: none;
+            color: #4CAF50;
+            display: block;
+            margin-top: 10px;
+        }
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="login-container">
+        <h2>Login</h2>
+        <input type="text" placeholder="Email" v-model="email">
+        <input type="password" placeholder="Password" v-model="password">
+        <button @click="login">Login</button>
+        <a href="#">Don't have an account? <span @click="signup">Signup</span></a>
+    </div>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                email: '',
+                password: ''
+            };
+        },
+        methods: {
+            login() {
+                // Redirect to eventslist.html on login button click
+                window.location.href = 'eventslist.html';
+            },
+            signup() {
+                alert("Redirecting to signup page...");
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
