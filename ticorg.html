@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #333;">
@@ -29,7 +30,7 @@
         </div>
     </nav>
 
-    <div class="container mt-5 pt-5">
+    <div id="app" class="container mt-5 pt-5">
         <h1 class="text-center">Available Tickets</h1>
         <div class="card text-center mb-4" style="background: rgba(255, 255, 255, 0.9);">
             <div class="card-body">
@@ -42,8 +43,13 @@
                             <th>Available Tickets</th>
                         </tr>
                     </thead>
-                    <tbody id="ticket-list">
-                        <!-- Available tickets will be populated here -->
+                    <tbody>
+                        <tr v-for="event in events" :key="event.title">
+                            <td>{{ event.title }}</td>
+                            <td>{{ event.totalTickets }}</td>
+                            <td>{{ getRegisteredCount(event.title) }}</td>
+                            <td>{{ event.totalTickets - getRegisteredCount(event.title) }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -57,33 +63,25 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        const events = [
-            { name: 'Annual Conference 2024', totalTickets: 250 },
-            { name: 'Web Development Workshop', totalTickets: 300 },
-            { name: 'Networking Meetup for Professionals', totalTickets: 200 },
-            { name: 'Marketing Strategies Seminar', totalTickets: 275 },
-            { name: 'Annual Charity Gala', totalTickets: 230 },
-            { name: 'Project Management Conference', totalTickets: 280 },
-            { name: 'AI Innovations Summit', totalTickets: 290 },
-            { name: 'Startup Pitch Competition', totalTickets: 250 },
-            { name: 'Health and Wellness Fair', totalTickets: 260 }
-        ];
-
-        const registeredEvents = JSON.parse(sessionStorage.getItem('registeredEvents')) || [];
-
-        const ticketList = document.getElementById('ticket-list');
-        events.forEach(event => {
-            const registeredCount = registeredEvents.filter(e => e === event.name).length;
-            const availableTickets = event.totalTickets - registeredCount;
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${event.name}</td>
-                <td>${event.totalTickets}</td>
-                <td>${registeredCount}</td>
-                <td>${availableTickets}</td>
-            `;
-            ticketList.appendChild(row);
+        new Vue({
+            el: '#app',
+            data: {
+                events: [
+                    { title: 'Techspo', date: 'Wed, Nov 29, 9:00 AM', location: 'The Westin Gurgaon New Delhi', extra: 'Starts at Rs 1187', totalTickets: 250, image: 'techspo.png' },
+                    { title: 'India Tech Summit', date: 'Wed, Dec 18, 10:00 AM', location: 'New Delhi, New Delhi, DL', extra: 'Global Startup Ecosystem', totalTickets: 300, image: 'techsummit.png' },
+                    { title: 'International Real Estate Expo 2024', date: 'Fri, Oct 18, 11:00 AM', location: 'Le Meridien New Delhi', extra: 'GMN Road Shows & Events', totalTickets: 200, image: 'mumexp.png' },
+                    { title: 'Mumbai International Finance Expo', date: 'Fri, Oct 25, 8:30 AM', location: 'Jio World Convention Centre, Mumbai', extra: 'Free | FIFin', totalTickets: 275, image: 'mumexp.png' },
+                    { title: 'Philips Jumpstarter', date: 'Mon, Nov 7, 10:00 AM', location: 'Taj Lands End, Mumbai', extra: '', totalTickets: 230, image: 'philips.png' },
+                    { title: 'Upcoming Dubai Event', date: 'Sat, Oct 26, 10:00 AM', location: 'Le Royal Meridien Chennai', extra: 'Free | Jassbier Sachdev', totalTickets: 280, image: 'dubai.png' },
+                    { title: '1st Intl Workshop on RAI for Healthcare and Net Zero', date: 'Wed, Oct 16, 9:00 AM', location: 'IIT Madras Campus', extra: 'Free', totalTickets: 290, image: 'worksp.png' }
+                ]
+            },
+            methods: {
+                getRegisteredCount(eventName) {
+                    const registeredEvents = JSON.parse(sessionStorage.getItem('registeredEvents')) || [];
+                    return registeredEvents.filter(e => e === eventName).length;
+                }
+            }
         });
     </script>
 </body>
