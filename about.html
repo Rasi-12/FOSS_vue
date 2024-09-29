@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9f5eb;
+            margin: 0;
+            padding: 0;
+            color: white; /* Set the default text color to white */
+        }
+        .container {
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+            color: white; /* Change title color to white */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: white; /* Set heading color to white */
+        }
+        p, li {
+            font-size: 14px;
+            color: white; /* Set paragraph and list item color to white */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .view-more-btn button {
+            color: white;
+            background-color: #007bff; /* Keep the button background blue */
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #333;">
@@ -29,40 +66,48 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <h1 class="text-center" style="color: black; font-weight: bold;">About Our Event Registration Application</h1>
-        <p style="color: black; font-weight: bold;">
-            Welcome to our Event Registration Application, a dedicated platform designed to bridge the gap between organizations and individuals looking to manage and participate in events seamlessly.
-        </p>
+    <div class="container mt-5" id="app">
+        <h1>{{ aboutTitle }}</h1>
+        <p>{{ aboutDescription }}</p>
 
-        <h2 style="color: black; font-weight: bold;">Our Mission</h2>
-        <p style="color: black; font-weight: bold;">
-            Our mission is to empower organizations by providing them with the tools they need to efficiently manage their events. From planning and organizing to promoting and registering attendees, we simplify the entire process, allowing event organizers to focus on what truly matters: creating unforgettable experiences.
-        </p>
-
-        <h2 style="color: black; font-weight: bold;">Who We Are</h2>
-        <p style="color: black; font-weight: bold;">
-            We are a passionate team of event enthusiasts, developers, and designers committed to enhancing the event management landscape. Our application caters to various types of events, including conferences, workshops, seminars, and social gatherings. We understand the unique challenges that come with event planning, and we aim to provide solutions tailored to your needs.
-        </p>
-
-        <h2 style="color: black; font-weight: bold;">Features</h2>
-        <ul style="color: black; font-weight: bold;">
-            <li>User-Friendly Interface: Our intuitive design ensures that both organizers and participants can navigate the platform with ease.</li>
-            <li>Event Management Tools: Organizers can create, customize, and manage events with features like ticketing, scheduling, and attendee tracking.</li>
-            <li>Seamless Registration: Participants can easily register for events, receive confirmations, and access event details, all in one place.</li>
-            <li>Real-Time Analytics: Gain insights into attendee engagement and event performance, helping you make informed decisions for future events.</li>
-            <li>Dedicated User Pages: Our platform provides personalized pages for users, allowing them to track their registrations, manage preferences, and stay updated on upcoming events.</li>
+        <h2>Features</h2>
+        <ul>
+            <li v-for="(feature, index) in features" :key="index">{{ feature }}</li>
         </ul>
 
-        <h2 style="color: black; font-weight: bold;">Why Choose Us?</h2>
-        <p style="color: black; font-weight: bold;">
-            We pride ourselves on our commitment to excellent customer service and continuous improvement. Our goal is to provide a reliable platform that not only meets but exceeds the expectations of our users. Whether you are an organization looking to host your next big event or an individual eager to participate, we are here to support you every step of the way.
-        </p>
-
-        <p style="color: black; font-weight: bold;">
-            Join us in transforming the way events are organized and experienced. We look forward to helping you make your next event a resounding success!
-        </p>
+        <div class="view-more-btn" v-if="!showAllFeatures">
+            <button @click="viewMoreFeatures">View More Features</button>
+        </div>
     </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                aboutTitle: 'About Our Event Registration Application',
+                aboutDescription: 'Welcome to our Event Registration Application, a dedicated platform designed to bridge the gap between organizations and individuals looking to manage and participate in events seamlessly.',
+                features: [
+                    'User-Friendly Interface: Easy navigation for both organizers and participants.',
+                    'Event Management Tools: Create, customize, and manage events with features like ticketing, scheduling, and attendee tracking.',
+                    'Seamless Registration: Easy registration for participants, with confirmations and event details.',
+                    'Real-Time Analytics: Gain insights into attendee engagement and event performance.',
+                    'Dedicated User Pages: Personalized pages for users to manage preferences and track registrations.',
+                ],
+                showAllFeatures: false
+            },
+            methods: {
+                viewMoreFeatures() {
+                    this.showAllFeatures = true;
+                    this.features.push(
+                        'Secure Payment Processing: Integrated with major payment gateways for easy transactions.',
+                        'Customizable Event Pages: Organizers can create branded event pages.',
+                        'Attendee Communication Tools: Manage communication with attendees through email or SMS.',
+                        'Event Feedback Collection: Collect feedback from attendees post-event for continuous improvement.'
+                    );
+                }
+            }
+        });
+    </script>
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -70,4 +115,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
 
