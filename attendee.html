@@ -1,97 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Attendee Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <link rel="stylesheet" href="styles.css">
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9f5eb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding-top: 50px;
+        }
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+            color: #1e90ff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .event-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .event-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .event-details {
+            margin-top: 10px;
+        }
+        .event-details h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .event-details .event-date {
+            color: red;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .event-details .event-location {
+            color: #555;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .event-details .event-extra {
+            font-size: 13px;
+            color: #777;
+            margin-top: 2px;
+        }
+        .view-more-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .view-more-btn button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #333;">
-        <a class="navbar-brand" href="home.html">Event Platform</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="home.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">About</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container mt-5 pt-5">
-        <h1 class="text-center">Attendee Dashboard</h1>
+    <div id="app" class="container">
+        <h1>Attendee Dashboard</h1>
         <p class="text-center">Browse and join events.</p>
 
-        <div class="card text-center mb-4" style="background: rgba(255, 255, 255, 0.9);">
-            <div class="card-body">
-                <h5 class="card-title">Available Events</h5>
-                <div id="events-list">
-                    <!-- Event buttons will be populated here -->
+        <!-- Event cards -->
+        <div class="events-grid">
+            <div v-for="(event, index) in visibleEvents" :key="index" class="event-card">
+                <img :src="event.image" :alt="event.title" />
+                <div class="event-details">
+                    <h3>{{ event.title }}</h3>
+                    <p class="event-date">{{ event.date }}</p>
+                    <p class="event-location">{{ event.location }}</p>
+                    <p class="event-extra">{{ event.extra }}</p>
+                    <button class="btn btn-success" @click="registerEvent(event.title)">Register</button>
                 </div>
             </div>
         </div>
 
-        <a href="ticatt.html" class="button registered-events btn btn-primary">View Registered Events</a>
-        <a href="home.html" class="button back-button btn btn-secondary">Back to Home</a>
+        <!-- View more button -->
+        <div class="view-more-btn" v-if="!showAll">
+            <button @click="viewMore">View More</button>
+        </div>
+        
+        <a href="ticatt.html" class="btn btn-primary mt-3">View Registered Events</a>
+        <a href="home.html" class="btn btn-secondary mt-2">Back to Home</a>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <script>
-        const events = [
-            'Annual Conference 2024',
-            'Web Development Workshop',
-            'Networking Meetup for Professionals',
-            'Marketing Strategies Seminar',
-            'Annual Charity Gala',
-            'Project Management Conference',
-            'AI Innovations Summit',
-            'Startup Pitch Competition',
-            'Health and Wellness Fair'
-        ];
-
-        const registeredEvents = JSON.parse(sessionStorage.getItem('registeredEvents')) || [];
-
-        function registerEvent(eventName) {
-            if (registeredEvents.includes(eventName)) {
-                alert('You have already registered for this event.');
-            } else {
-                registeredEvents.push(eventName);
-                alert('Successfully registered for ' + eventName + '!');
-                sessionStorage.setItem('registeredEvents', JSON.stringify(registeredEvents));
+        new Vue({
+            el: '#app',
+            data: {
+                events: [
+                    { title: 'Techspo', date: 'Wed, Nov 29, 9:00 AM', location: 'The Westin Gurgaon New Delhi', extra: 'Starts at Rs 1187', image: 'techspo.png' },
+                    { title: 'India Tech Summit', date: 'Wed, Dec 18, 10:00 AM', location: 'New Delhi, New Delhi, DL', extra: 'Global Startup Ecosystem', image: 'techsummit.png' },
+                    { title: 'International Real Estate Expo 2024', date: 'Fri, Oct 18, 11:00 AM', location: 'Le Meridien New Delhi', extra: 'GMN Road Shows & Events', image: 'mumexp.png' },
+                    { title: 'Mumbai International Finance Expo', date: 'Fri, Oct 25, 8:30 AM', location: 'Jio World Convention Centre, Mumbai', extra: 'Free | FIFin', image: 'mumexp.png' },
+                    { title: 'Philips Jumpstarter', date: 'Mon, Nov 7, 10:00 AM', location: 'Taj Lands End, Mumbai', extra: '', image: 'philips.png' },
+                    { title: 'Upcoming Dubai Event', date: 'Sat, Oct 26, 10:00 AM', location: 'Le Royal Meridien Chennai', extra: 'Free | Jassbier Sachdev', image: 'dubai.png' },
+                    { title: '1st Intl Workshop on RAI for Healthcare and Net Zero', date: 'Wed, Oct 16, 9:00 AM', location: 'IIT Madras Campus', extra: 'Free', image: 'worksp.png' }
+                ],
+                showAll: false,
+                registeredEvents: JSON.parse(sessionStorage.getItem('registeredEvents')) || []
+            },
+            computed: {
+                visibleEvents() {
+                    return this.showAll ? this.events : this.events.slice(0, 3);
+                }
+            },
+            methods: {
+                viewMore() {
+                    this.showAll = true;
+                },
+                registerEvent(eventName) {
+                    if (this.registeredEvents.includes(eventName)) {
+                        alert('You have already registered for this event.');
+                    } else {
+                        this.registeredEvents.push(eventName);
+                        alert('Successfully registered for ' + eventName + '!');
+                        sessionStorage.setItem('registeredEvents', JSON.stringify(this.registeredEvents));
+                    }
+                }
             }
-        }
-
-        const eventsList = document.getElementById('events-list');
-        events.forEach(event => {
-            const eventDiv = document.createElement('div');
-            eventDiv.className = 'd-flex justify-content-between align-items-center mb-2';
-
-            const eventName = document.createElement('span');
-            eventName.textContent = event;
-            eventDiv.appendChild(eventName);
-
-            const button = document.createElement('button');
-            button.className = 'btn btn-success ml-2';
-            button.textContent = 'Register';
-            button.onclick = () => registerEvent(event);
-            eventDiv.appendChild(button);
-
-            eventsList.appendChild(eventDiv);
         });
     </script>
 </body>
