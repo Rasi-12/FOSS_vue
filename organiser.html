@@ -1,144 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Signup Form</title>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-image: url('https://img.freepik.com/premium-photo/hotel-event-conference-planning_1314467-82074.jpg');
-      background-size: cover;
-      background-position: center;
-    }
-    .signup-container {
-      background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 300px;
-    }
-    .signup-container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .form-group label {
-      font-size: 14px;
-    }
-    .btn {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .btn:disabled {
-      background-color: #ccc;
-    }
-    .terms {
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-    }
-    .terms input {
-      margin-right: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organiser Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
-  <div id="app" class="signup-container">
-    <h2>Signup</h2>
-    <form @submit.prevent="submitForm">
-      <div class="form-group">
-        <label for="orgName">Organization Name</label>
-        <input type="text" id="orgName" v-model="form.orgName" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="form.email" required />
-      </div>
-      <div class="form-group">
-        <label for="phone">Phone No</label>
-        <input type="text" id="phone" v-model="form.phone" required />
-      </div>
-      <div class="form-group">
-        <label for="industry">Industry</label>
-        <select id="industry" v-model="form.industry" required>
-          <option disabled value="">Select Industry</option>
-          <option value="Tech">Tech</option>
-          <option value="Finance">Finance</option>
-          <option value="Healthcare">Healthcare</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="form.password" required />
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="form.confirmPassword" required />
-      </div>
-      <div class="terms">
-        <input type="checkbox" v-model="form.agree" id="agree" />
-        <label for="agree">I agree to the <a href="#">terms and conditions</a></label>
-      </div>
-      <button type="submit" class="btn" :disabled="!form.agree || !isPasswordMatch">
-        Signup
-      </button>
-    </form>
-  </div>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #333;">
+        <a class="navbar-brand" href="home.html">Event Platform</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-  <script>
-    new Vue({
-      el: '#app',
-      data() {
-        return {
-          form: {
-            orgName: '',
-            email: '',
-            phone: '',
-            industry: '',
-            password: '',
-            confirmPassword: '',
-            agree: false,
-          },
-        };
-      },
-      computed: {
-        isPasswordMatch() {
-          return this.form.password === this.form.confirmPassword;
-        },
-      },
-      methods: {
-        submitForm() {
-          if (this.isPasswordMatch) {
-            alert('Form submitted successfully!');
-            window.location.href = 'organiser.html'; // Redirect to organiser page
-          } else {
-            alert('Passwords do not match.');
-          }
-        },
-      },
-    });
-  </script>
+    <div id="app" class="container mt-5 pt-5">
+        <h1 class="text-center">Organiser Dashboard</h1>
+        <p class="text-center">Here you can manage your events.</p>
+
+        <h2 class="text-center">Current Events</h2>
+        <ul class="list-group mb-4">
+            <li class="list-group-item" v-for="event in events" :key="event.title">
+                <strong>{{ event.title }}</strong><br>
+                <small>Date: {{ event.date }} | Location: {{ event.location }}</small><br>
+                <small>{{ event.extra }}</small>
+                <a href="ticorg.html" class="btn btn-link float-right">View Ticket Sales</a>
+            </li>
+        </ul>
+
+        <a href="home.html" class="button back-button btn btn-secondary">Back to Home</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                events: [
+                    { title: 'Techspo', date: 'Wed, Nov 29, 9:00 AM', location: 'The Westin Gurgaon New Delhi', extra: 'Starts at Rs 1187', image: 'techspo.png' },
+                    { title: 'India Tech Summit', date: 'Wed, Dec 18, 10:00 AM', location: 'New Delhi, New Delhi, DL', extra: 'Global Startup Ecosystem', image: 'techsummit.png' },
+                    { title: 'International Real Estate Expo 2024', date: 'Fri, Oct 18, 11:00 AM', location: 'Le Meridien New Delhi', extra: 'GMN Road Shows & Events', image: 'mumexp.png' },
+                    { title: 'Mumbai International Finance Expo', date: 'Fri, Oct 25, 8:30 AM', location: 'Jio World Convention Centre, Mumbai', extra: 'Free | FIFin', image: 'mumexp.png' },
+                    { title: 'Philips Jumpstarter', date: 'Mon, Nov 7, 10:00 AM', location: 'Taj Lands End, Mumbai', extra: '', image: 'philips.png' },
+                    { title: 'Upcoming Dubai Event', date: 'Sat, Oct 26, 10:00 AM', location: 'Le Royal Meridien Chennai', extra: 'Free | Jassbier Sachdev', image: 'dubai.png' },
+                    { title: '1st Intl Workshop on RAI for Healthcare and Net Zero', date: 'Wed, Oct 16, 9:00 AM', location: 'IIT Madras Campus', extra: 'Free', image: 'worksp.png' }
+                ]
+            }
+        });
+    </script>
 </body>
 </html>
+
